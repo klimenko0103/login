@@ -1,0 +1,35 @@
+body {
+  margin: 3%;
+  padding: 0;
+  font-family: sans-serif;
+  background: #175690;
+
+}
+
+.forms {
+  background: #fff;
+  box-shadow: 0 0 3px #000;
+  margin: 10px auto;
+  max-width: 500px;
+  overflow: hidden;
+  position: relative;
+  padding: 0;
+
+
+}
+.forms form { padding: 30px; }
+
+
+
+.nav-tabs > .active {
+  background-color: #73cf41;
+
+  border-top: 10px solid #73cf41;
+}
+
+.nav-tabs.nav-justified>.active>a,
+.nav-tabs.nav-justified>.active>a:hover,
+.nav-tabs.nav-justified>.active>a:focus {
+  background-color: #73cf41;
+  border: none;
+}
