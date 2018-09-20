@@ -1,35 +1,81 @@
 body {
-  margin: 3%;
-  padding: 0;
-  font-family: sans-serif;
+
+  /*height: 100%;*/
+  /*vertical-align: middle;*/
+  padding:20px;
+  /*font-family: sans-serif;*/
   background: #175690;
+  margin: auto;
+  display: block;
+  width: 450px;
+  /*position: absolute;*/
+  /*top: 50%;*/
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*justify-content: center;*/
 
 }
 
 .forms {
   background: #fff;
-  box-shadow: 0 0 3px #000;
-  margin: 10px auto;
-  max-width: 500px;
-  overflow: hidden;
-  position: relative;
-  padding: 0;
-
+  /*box-shadow: 0 0 3px #000;*/
+  margin: 0;
+  /*max-width: 500px;*/
+  /*overflow: hidden;*/
+  /*position: relative;*/
+  /*padding: 0;*/
+  /*display: block;*/
 
 }
+
 .forms form { padding: 30px; }
 
+.forms1 {
+  background: #fff;
 
+  margin: 0;
+  font-size: 180%;
+}
+.forms1 form { padding: 30px; }
 
-.nav-tabs > .active {
-  background-color: #73cf41;
+/*@media screen and (max-width: 600px) {*/
+  /*body { background: #fc0!important; }*/
+/*}*/
+@media (min-height: 768px) {
+  body  {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.form-check-input  + label{
+  padding: 10px;
 
-  border-top: 10px solid #73cf41;
+}
+.form-check-input{
+  display: none;
+}
+
+.form-check-input:checked + label{
+  color: white;
+  background: #175690;
+  border-radius: 18px;
+  min-width: 100px;
 }
 
 .nav-tabs.nav-justified>.active>a,
 .nav-tabs.nav-justified>.active>a:hover,
-.nav-tabs.nav-justified>.active>a:focus {
-  background-color: #73cf41;
-  border: none;
+.nav-tabs.nav-justified>.active>a:focus{
+  background-color: #BEE4EE;
+
+
+
+  /*border-bottom: 5px solid transparent;*/
 }
+ /*.user .active {*/
+   /*visibility: hidden;*/
+   /*!*background-color: #BEE4EE;*!*/
+
+ /*}*/
+/*.btn btn-lg btn-primary btn-block:active +.*/
+/*.user { visibility: visible;}*/

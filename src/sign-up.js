@@ -19,11 +19,8 @@ export default class SignUp extends Component {
         var PasswordIsValid = this.validatePassword(password);
 
         this.state = {
-           // email:'',
-            //password:'',
             name:'',
             age:'',
-            //login:'',
             emailValid: EmailIsValid,
             email: email,
             login: login,
@@ -53,66 +50,40 @@ export default class SignUp extends Component {
         var valid = this.validateEmail(val);
         this.setState({email: val, emailValid: valid});
     }
-
     handleLoginChange(e) {
         var val = e.target.value;
         var valid = this.validateLogin(val);
         this.setState({login: val, loginValid: valid});
     }
-
-
     handlePasswordChange(e) {
         var val = e.target.value;
         var valid = this.validatePassword(val);
         this.setState({password: val, passwordValid: valid});
     }
-
-
-
-
-    signup(){
-        //alert(' Password is ' + this.state.password);
-        localStorage.setItem('locpass',md5(this.state.password || ''));
-        var  localValue = localStorage.getItem('locpass');
-        console.log(localValue);
-
-
-    }
-
-
     handleNameChange(e){
         this.setState({name:e.target.value})
     }
     handleAgeChange(e){
         this.setState({age:e.target.value})
     }
-    // handleEmailChange(e){
-    //     this.setState({email:e.target.value})
-    // }
-    // handleLoginChange(e){
-    //     this.setState({login:e.target.value})
-    // }
-    // handlePasswordChange(e){
-    //     this.setState({password:e.target.value})
-    // }
 
 
 
+    signup(){
+        localStorage.setItem('locpassword',md5(this.state.password || ''));
+        localStorage.setItem('locname',this.state.name || '');
+        localStorage.setItem('locage',this.state.age || '');
+        localStorage.setItem('locemail',this.state.email || '');
+        localStorage.setItem('loclogin',this.state.login || '');
 
-
+        var  localValue = localStorage.getItem('locpassword');
+        console.log(localValue);
+    }
 
     render() {
         var emailColor = (this.state.emailValid===true)?"red":"green" ;
         var loginColor = (this.state.loginValid===true)?"red":"green" ;
         var passwordColor = (this.state.passwordValid===true)?"red":"green" ;
-
-        //var p = md5(this.state.password || '');
-         //console.log(this.state.password, typeof this.state.password);
-        //  var l = md5("p");
-        // console.log(l);
-        //var md5pass = md5(this.state.password);
-        //console.log(md5('aaaa'));
-
 
                 return (
                     <div className="forms">
@@ -120,7 +91,6 @@ export default class SignUp extends Component {
 
                             <form action="#" id="signup">
 
-                                <h1> Sign Up </h1>
                                 <div className="form-group">
                                     <label htmlFor="inputName">Name</label>
                                     <input type="name"  onChange={this.handleNameChange} id="inputName" className="form-control" placeholder="Name" autoFocus />
@@ -144,9 +114,6 @@ export default class SignUp extends Component {
                                 <button className="btn btn-lg btn-primary btn-block" onClick={this.signup.bind(this)} type="button" disabled={!this.state.email| !this.state.login | !this.state.password}> Sign Up </button>
 
                             </form>
-
-
-
 
                         </div>
                     </div>
