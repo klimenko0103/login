@@ -43,7 +43,7 @@ export default class Login extends Component {
 
     login(user){
         user = this.state.login === localStorage.getItem('loclogin') && md5(this.state.password) === localStorage.getItem('locpassword');
-        console.log(user);
+        // console.log(user);
             if (!!user) {
                 this.props && this.props.onChange(user)
             }

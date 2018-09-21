@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-rout
 import Login from './log-in';
 import SignUp from './sign-up';
 import Edit from './profile';
+import Homes from './homes';
 
 
 export default class Main extends Component
@@ -30,7 +31,7 @@ export default class Main extends Component
         var extraClass2 = this.state.extraClass2;
 
         var user = this.state.user || false;
-        console.log(user);
+        // console.log(user);
 
         return (
             <div className="f">
@@ -42,11 +43,13 @@ export default class Main extends Component
                                 {!user &&<li className={"tab " + extraClass1} onClick={this.ActiveForm.bind(this, 'sign')}><Link to={'/sign-up'}>Sign Up</Link></li>}
                                 {!user && <li className={"tab " + extraClass2} onClick={this.ActiveForm.bind(this, 'log')}><Link to={'/log-in'}>Log In</Link></li>}
                                 {user && <li className={"user "} > <Link to={'/profile'}><img src={require('./2.png')} alt="profiles" height="36"/></Link></li>}
+                                <li className="tab " ><Link to={'/homes'}>Homes</Link></li>
                             </ul>
                         </div>
                     </div>
 
-                    <Switch>}
+                    <Switch>
+                        <Route exact path='/homes' component={Homes} />
                         <Route exact path='/sign-up' component={SignUp} />
                         <Route exact path='/profile' component={Edit} />
                         <Route exact path="/log-in" render={() => (
@@ -56,6 +59,7 @@ export default class Main extends Component
                                 <Login onChange={this.changeUser.bind(this)}/>
                             )
                         )}/>
+
                     </Switch>
 
                 </div>

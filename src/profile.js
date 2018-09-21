@@ -88,7 +88,7 @@ export default class Edit extends Component {
         var passwordColor = (this.state.passwordValid===true)?"red":"green" ;
         var nameColor = (this.state.nameValid===true)?"red":"green" ;
         var ageColor = (this.state.ageValid===true)?"red":"green" ;
-        var locvalage = localStorage.getItem('locage');
+
 
         return (
             <div className="forms">
@@ -99,11 +99,11 @@ export default class Edit extends Component {
 
                         <div className="form-group">
                             <label htmlFor="inputName">Name</label>
-                            <input type="name"  onChange={this.handleNameChange} value={localStorage.getItem('locname')} id="inputName" className="form-control" placeholder="Name" autoFocus style={{borderColor:nameColor}}/>
+                            <input type="name"  onChange={this.handleNameChange} placeholder={localStorage.getItem('locname')} id="inputName" className="form-control"  autoFocus style={{borderColor:nameColor}}/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="inputAge">Age</label>
-                            <input type="age" onChange={this.handleAgeChange} value={locvalage} id="inputAge" className="form-control" placeholder="Age" style={{borderColor:ageColor}} />
+                            <input type="age" onChange={this.handleAgeChange}  id="inputAge" className="form-control" placeholder={localStorage.getItem('locage')} style={{borderColor:ageColor}} />
                         </div>
                         <div className="form-group">
                         <label htmlFor="input">Gender</label>
@@ -116,8 +116,8 @@ export default class Edit extends Component {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="inputPassword"> Password</label>
-                            <input type="password" onChange={this.handlePasswordChange} value={localStorage.getItem('locpassword'|| '')} id="inputPassword" className="form-control" placeholder="Password" required style={{borderColor:passwordColor}}/>
+                            <label htmlFor="inputPassword"> Change password</label>
+                            <input type="password" onChange={this.handlePasswordChange}  id="inputPassword" className="form-control" placeholder="Password" required style={{borderColor:passwordColor}}/>
                         </div>
                         <button className="btn btn-lg btn-primary btn-block" onClick={this.edit.bind(this)} type="button" disabled={!this.state.age && !this.state.gender && !this.state.name && !this.state.password}> Save </button>
 
