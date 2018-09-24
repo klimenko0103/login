@@ -6,19 +6,18 @@ export default class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.handleLoginChange = this.handleLoginChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
         var login = props.login;
         var LoginIsValid = this.validateLogin(login);
         var password = props.password;
         var PasswordIsValid = this.validatePassword(password);
-
         this.state = {
             login: login,
             loginValid: LoginIsValid,
             password: password,
             passwordValid: PasswordIsValid,
         };
+        this.handleLoginChange = this.handleLoginChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
     }
 
     validateLogin(login){
@@ -27,7 +26,6 @@ export default class Login extends Component {
     validatePassword(password){
         return (!password);
     }
-
 
     handleLoginChange(e) {
         var val = e.target.value;
@@ -40,7 +38,6 @@ export default class Login extends Component {
         this.setState({password: val, passwordValid: valid});
     }
 
-
     login(user){
         user = this.state.login === localStorage.getItem('loclogin') && md5(this.state.password) === localStorage.getItem('locpassword');
         // console.log(user);
@@ -48,7 +45,6 @@ export default class Login extends Component {
                 this.props && this.props.onChange(user)
             }
     }
-
 
     render() {
         var loginColor = (this.state.loginValid===true)?"red":"green" ;

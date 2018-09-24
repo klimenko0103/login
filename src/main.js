@@ -12,46 +12,43 @@ export default class Main extends Component
         super();
         this.state = {
             extraClass1: '',
-            extraClass2: 'active',
+            extraClass2: '',
         }
     }
 
     ActiveForm(str){
-        str === 'sign' ? this.setState({extraClass1: 'active', extraClass2: ''}) : this.setState({extraClass1: '', extraClass2: 'active'});
+        str === 'log' ? this.setState({extraClass1: 'active', extraClass2: ''}) : this.setState({extraClass1: '', extraClass2: ''});
     }
-
+    ActiveForm2(str){
+        str === 'profile' ? this.setState({extraClass1: 'active', extraClass2: ''}) : this.setState({extraClass1: '', extraClass2: 'active'});
+    }
     changeUser(user) {
        this.setState({user: user})
     }
-
 
     render()
     {
         var extraClass1 = this.state.extraClass1;
         var extraClass2 = this.state.extraClass2;
-
         var user = this.state.user || false;
         // console.log(user);
 
         return (
             <div className="f">
-                     <Router>
-                <div >
-                    <div className="forms1">
-                        <div >
-                            <ul className="nav nav-tabs nav-justified">
-                                {!user &&<li className={"tab " + extraClass1} onClick={this.ActiveForm.bind(this, 'sign')}><Link to={'/sign-up'}>Sign Up</Link></li>}
-                                {!user && <li className={"tab " + extraClass2} onClick={this.ActiveForm.bind(this, 'log')}><Link to={'/log-in'}>Log In</Link></li>}
-                                {user && <li className={"user "} > <Link to={'/profile'}><img src={require('./2.png')} alt="profiles" height="36"/></Link></li>}
-                                <li className="tab " ><Link to={'/homes'}>Homes</Link></li>
-                            </ul>
+                <Router>
+                    <div >
+                        <div className="forms1">
+                            <div >
+                                <ul className="nav nav-tabs nav-justified">
+                                    {!user && <li className={"tab " + extraClass1} onClick={this.ActiveForm.bind(this, 'log')}><Link to={'/log-in'}>Log In</Link></li>}
+                                    {!user &&<li className={"tab " + extraClass2} onClick={this.ActiveForm.bind(this, 'sign')}><Link to={'/sign-up'}>Sign Up</Link></li>}
+                                    {user && <li className={"user " + extraClass1} onClick={this.ActiveForm2.bind(this, 'profile')}> <Link to={'/profile'}><img src={require('./2.png')} alt="profiles" height="36"/></Link></li>}
+                                    {user &&<li className={"tab "+ extraClass2} onClick={this.ActiveForm2.bind(this, 'homes')}><Link to={'/homes'}>Homes</Link></li>}
+                                    {user &&<li className={"tab " } onClick={()=>this.setState({user:false})} ><Link to={'/'}>logout</Link></li>}
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-
                     <Switch>
-                        <Route exact path='/homes' component={Homes} />
-                        <Route exact path='/sign-up' component={SignUp} />
-                        <Route exact path='/profile' component={Edit} />
                         <Route exact path="/log-in" render={() => (
                             (user) ? (
                                 <Redirect to="/profile"/>
@@ -59,11 +56,12 @@ export default class Main extends Component
                                 <Login onChange={this.changeUser.bind(this)}/>
                             )
                         )}/>
-
+                        <Route exact path='/homes' component={Homes} />
+                        <Route exact path='/sign-up' component={SignUp} />
+                        <Route exact path='/profile' component={Edit} />
                     </Switch>
-
-                </div>
-            </Router>
+                    </div>
+                </Router>
             </div>
         )
     }

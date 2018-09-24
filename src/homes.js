@@ -5,17 +5,14 @@ export default class Homes extends Component {
 
     constructor(props) {
         super(props);
-        this.GetHomeName = this.GetHomeName.bind(this);
-        var value = props.value || "";
-        var home = props.home;
         var homeId = props.homeId;
-        var HomeIsValid = this.validateHome(home);
-        this.handleChange = this.handleChange.bind(this);
-        this.SaveHomeName = this.SaveHomeName.bind(this);
-
+        var value = props.value || "";
+        var rooms = props.rooms || "";
+        var HomeIsValid = this.validateHome(value);
+        var homeObject= props.homeObject || "";
         this.state = {
             home: [{
-                    "_id": "58873bae28f4bf912185591b",
+                    "_id": "58873bae28f4bf912185598b",
                     "id": "TEST_HOME2",
                     "rooms": [{
                         "accessories": [{
@@ -239,7 +236,7 @@ export default class Homes extends Component {
                     "homeName": "New TEST",
                     "potential_status": "Confirmed"
                 }, {
-                    "_id": "588755f714927e0d38856405",
+                    "_id": "588755f714927e0d38856487",
                     "id": "TEST HOME 3",
                     "rooms": [{
                         "accessories": [{
@@ -449,22 +446,46 @@ export default class Homes extends Component {
             value:value,
             homeId:homeId,
             homeValid: HomeIsValid,
+            homeColor: '',
+            homeObject:homeObject,
+            rooms: rooms
         };
+        this.GetHomeName = this.GetHomeName.bind(this);
+        this.GetRoomName = this.GetRoomName.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.SaveHomeName = this.SaveHomeName.bind(this);
+
     }
 
-
-    validateHome(home){
-        return (!home);
+    validateHome(value){
+        if (value === ''){
+          return (!value);
+        }
     }
 
     GetHomeName(){
+
         return this.state.home.map((home, index)=>(
             <option key={'h' + index} data-id={home._id}>{home.homeName}</option>
+
         ));
     }
 
+    GetRoomName(){
+        if (Array.isArray(this.state.rooms)){
+            return this.state.rooms.map((rooms, index) => (
+                <option key={'r' + index}>{rooms.roomName}</option>
+            ));
+        }else{
+            //todo complete functionality
+            return ""
+        }
+
+    }
+
+
     handleInputChange(e) {
-        // console.log(this.state.value);
+         // console.log(this.state.value);
          this.setState({value:e.target.value});
     }
 
@@ -473,7 +494,7 @@ export default class Homes extends Component {
         if(!selector){
             return console.warn('Selector was not found');
         }
-        let selectedIndex = e.target.selectedIndex; //todo check selected index
+        let selectedIndex = e.target.selectedIndex;
         if(!selectedIndex){
             return console.warn('Selected index was not found');
         }
@@ -484,24 +505,52 @@ export default class Homes extends Component {
         // console.log(homeId);
         this.setState({homeId:homeId, value: e.target.value});
 
+        let homeObject =[];
+        // console.log(this.state.home)
+       this.state.home.forEach((home)=> {
+            // console.log(home._id,  homeId )
+            if (home._id === homeId) {
+                homeObject = home;
+                // console.log(homeObject)
+            }
+        });
+        // console.log(homeObject)
+        this.setState({homeObject:homeObject})
+        // console.log(homeObject.rooms);
+        var rooms= homeObject.rooms;
+        // console.log(rooms);
+        this.setState({rooms:rooms})
+
+
+        // console.log(home.roomName);
+
     }
 
     SaveHomeName(){
-       var homesUpdated = this.state.home.map((home)=>{
+        var homeColor = (this.validateHome(this.state.value))?"red":"green" ;
+        this.setState({homeColor:homeColor});
+        // console.log(homeColor);
+        // console.log(this.state.value);
+
+        // console.log(this.state.home);
+        if (homeColor === "green") {
+            var homesUpdated = this.state.home.map((home)=>{
             if (home._id === this.state.homeId){
                 home.homeName = this.state.value;
             }
             return home;
         });
-       this.setState({home:homesUpdated});
-       // console.log(this.state.home);
+            this.setState({home:homesUpdated});
+        }
     }
 
     render() {
 
-        // console.log(this.state.homeId);
-        // console.log(this.state.value);
-        var homeColor = (this.state.homeValid===true)?"red":"green" ;
+        // console.log(this.state.home)
+        // console.log(this.state.home[1].rooms);
+        // console.log(this.state.homeObject)
+        // console.log(this.state.rooms)
+
 
         return (
             <div className="forms">
@@ -514,11 +563,18 @@ export default class Homes extends Component {
                         </select>
                     </div>
                     <label>Edit Home</label>
-                    <div className="input-group">
-                            <input value={this.state.value} onChange={this.handleInputChange.bind(this)} style={{borderColor:homeColor}} type="text" className="form-control"/>
+                    <div className="input-group" >
+                            <input value={this.state.value} onChange={this.handleInputChange.bind(this)} style={{borderColor:this.state.homeColor}} type="text" className="form-control"/>
                             <span className="input-group-btn">
                                 <button className="btn btn-primary" type="button" onClick={this.SaveHomeName} >Save</button>
                             </span>
+                    </div>
+                    <div className="form-group">
+                        <label>Room</label>
+                        <select defaultValue={'Choose'}  className="form-control">
+                            <option value="Choose">Choose room</option>
+                            {this.GetRoomName()}
+                        </select>
                     </div>
 
                 </form>
@@ -526,7 +582,6 @@ export default class Homes extends Component {
         )
     }
 }
-
 
 
 

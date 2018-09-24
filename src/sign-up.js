@@ -6,18 +6,12 @@ export default class SignUp extends Component {
 
     constructor(props) {
         super(props);
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handleAgeChange = this.handleAgeChange.bind(this);
-        this.handleLoginChange = this.handleLoginChange.bind(this);
-        this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
         var email = props.email;
         var EmailIsValid = this.validateEmail(email);
         var login = props.login;
         var LoginIsValid = this.validateLogin(login);
         var password = props.password;
         var PasswordIsValid = this.validatePassword(password);
-
         this.state = {
             name:'',
             age:'',
@@ -27,11 +21,14 @@ export default class SignUp extends Component {
             loginValid: LoginIsValid,
             password: password,
             passwordValid: PasswordIsValid
-
         };
-
-
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleAgeChange = this.handleAgeChange.bind(this);
+        this.handleLoginChange = this.handleLoginChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
     }
+
     validateEmail(email){
         return (!email);
     }
@@ -41,9 +38,6 @@ export default class SignUp extends Component {
     validatePassword(password){
         return (!password);
     }
-
-
-
 
     handleEmailChange(e) {
         var val = e.target.value;
@@ -67,15 +61,12 @@ export default class SignUp extends Component {
         this.setState({age:e.target.value})
     }
 
-
-
     signup(){
         localStorage.setItem('locpassword',md5(this.state.password || ''));
         localStorage.setItem('locname',this.state.name || '');
         localStorage.setItem('locage',this.state.age || '');
         localStorage.setItem('locemail',this.state.email || '');
         localStorage.setItem('loclogin',this.state.login || '');
-
         var  localValue = localStorage.getItem('locpassword');
         console.log(localValue);
     }
@@ -85,42 +76,37 @@ export default class SignUp extends Component {
         var loginColor = (this.state.loginValid===true)?"red":"green" ;
         var passwordColor = (this.state.passwordValid===true)?"red":"green" ;
 
-                return (
-                    <div className="forms">
-                        <div >
-
-                            <form action="#" id="signup">
-
-                                <div className="form-group">
-                                    <label htmlFor="inputName">Name</label>
-                                    <input type="name"  onChange={this.handleNameChange} id="inputName" className="form-control" placeholder="Name" autoFocus />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="inputAge">Age</label>
-                                    <input type="age" onChange={this.handleAgeChange} id="inputAge" className="form-control" placeholder="Age" />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="inputEmail"> Email address</label>
-                                    <input type="email" onChange={this.handleEmailChange} id="inputEmail" className="form-control" placeholder="Email address" required style={{borderColor:emailColor}} />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="inputLogin">Login</label>
-                                    <input type="login" onChange={this.handleLoginChange} id="inputLogin" className="form-control" placeholder="Login" required style={{borderColor:loginColor}}/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="inputPassword"> Password</label>
-                                    <input type="password" onChange={this.handlePasswordChange} id="inputPassword" className="form-control" placeholder="Password" required style={{borderColor:passwordColor}}/>
-                                </div>
-                                <button className="btn btn-lg btn-primary btn-block" onClick={this.signup.bind(this)} type="button" disabled={!this.state.email| !this.state.login | !this.state.password}> Sign Up </button>
-
-                            </form>
-
+        return (
+            <div className="forms">
+                <div >
+                    <form action="#" id="signup">
+                        <div className="form-group">
+                            <label htmlFor="inputName">Name</label>
+                            <input type="name"  onChange={this.handleNameChange} id="inputName" className="form-control" placeholder="Name" autoFocus />
                         </div>
-                    </div>
-
-                )
-            }
-        }
+                        <div className="form-group">
+                            <label htmlFor="inputAge">Age</label>
+                            <input type="age" onChange={this.handleAgeChange} id="inputAge" className="form-control" placeholder="Age" />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="inputEmail"> Email address</label>
+                            <input type="email" onChange={this.handleEmailChange} id="inputEmail" className="form-control" placeholder="Email address" required style={{borderColor:emailColor}} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="inputLogin">Login</label>
+                            <input type="login" onChange={this.handleLoginChange} id="inputLogin" className="form-control" placeholder="Login" required style={{borderColor:loginColor}}/>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="inputPassword"> Password</label>
+                            <input type="password" onChange={this.handlePasswordChange} id="inputPassword" className="form-control" placeholder="Password" required style={{borderColor:passwordColor}}/>
+                        </div>
+                        <button className="btn btn-lg btn-primary btn-block" onClick={this.signup.bind(this)} type="button" disabled={!this.state.email| !this.state.login | !this.state.password}> Sign Up </button>
+                    </form>
+                </div>
+            </div>
+        )
+    }
+}
 
 
 
