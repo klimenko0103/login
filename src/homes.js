@@ -8,8 +8,11 @@ export default class Homes extends Component {
         var homeId = props.homeId;
         var value = props.value || "";
         var rooms = props.rooms || "";
-        var HomeIsValid = this.validateHome(value);
+        var valueRoom= props.valueRoom||"";
         var homeObject= props.homeObject || "";
+        var roomId = props.roomId;
+        var HomeIsValid = this.validateHome(value);
+        var roomIsValid = this.validateRoom(valueRoom);
         this.state = {
             home: [{
                     "_id": "58873bae28f4bf912185598b",
@@ -448,18 +451,29 @@ export default class Homes extends Component {
             homeValid: HomeIsValid,
             homeColor: '',
             homeObject:homeObject,
-            rooms: rooms
+            rooms: rooms,
+            valueRoom:valueRoom,
+            roomId:roomId,
+            roomValid: roomIsValid,
+            roomColor: '',
         };
         this.GetHomeName = this.GetHomeName.bind(this);
         this.GetRoomName = this.GetRoomName.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.changeRoom= this.changeRoom.bind(this);
         this.SaveHomeName = this.SaveHomeName.bind(this);
+        this.SaveRoomName = this.SaveRoomName.bind(this);
 
     }
 
     validateHome(value){
         if (value === ''){
           return (!value);
+        }
+    }
+    validateRoom(valueRoom){
+        if (valueRoom === ''){
+            return (!valueRoom);
         }
     }
 
@@ -474,7 +488,7 @@ export default class Homes extends Component {
     GetRoomName(){
         if (Array.isArray(this.state.rooms)){
             return this.state.rooms.map((rooms, index) => (
-                <option key={'r' + index}>{rooms.roomName}</option>
+                <option key={'r' + index} data-idr={rooms.id}>{rooms.roomName}</option>
             ));
         }else{
             //todo complete functionality
@@ -487,6 +501,10 @@ export default class Homes extends Component {
     handleInputChange(e) {
          // console.log(this.state.value);
          this.setState({value:e.target.value});
+    }
+    roomInputChange(e) {
+        this.setState({valueRoom: e.target.value});
+        // console.log(this.state.valueRoom);//то, что вводим
     }
 
     handleChange(e) {
@@ -544,9 +562,56 @@ export default class Homes extends Component {
         }
     }
 
+
+    changeRoom(e) {
+        let selector = e.target;
+       console.log(selector)
+        if(!selector){
+            return console.warn('Selector was not found');
+        }
+        let selectedIndex = e.target.selectedIndex;
+        console.log(selectedIndex)
+        if(!selectedIndex){
+            return console.warn('Selected index was not found');
+        }
+        let selectedOption = selector.children[selectedIndex];
+        console.log(selectedOption)
+        let roomId = selectedOption.getAttribute('data-idr');
+        console.log(roomId )
+
+        // console.log([e.target], e.target.children[e.target.selectedIndex].getAttribute('data-id'));
+        // console.log(homeId);
+        this.setState({roomId:roomId, valueRoom: e.target.value});
+        // console.log(this.state.roomId) //объекты комнат
+
+    }
+
+
+    SaveRoomName(){
+        var roomColor = (this.validateRoom(this.state.valueRoom))?"red":"green" ;
+        this.setState({roomColor:roomColor});
+        // console.log(homeColor);
+        // console.log(this.state.value);
+
+        // console.log(this.state.home);
+        if (roomColor === "green") {
+        if (Array.isArray(this.state.rooms)) {
+            var roomsUpdated = this.state.rooms.map((rooms) => {
+                if (rooms.id === this.state.roomId) {
+                    rooms.roomName = this.state.valueRoom;
+                }
+                return rooms;
+            });
+        }
+            this.setState({rooms:roomsUpdated});
+        }
+    }
+
+
+
     render() {
 
-        // console.log(this.state.home)
+         // console.log(this.state.home)
         // console.log(this.state.home[1].rooms);
         // console.log(this.state.homeObject)
         // console.log(this.state.rooms)
@@ -571,10 +636,17 @@ export default class Homes extends Component {
                     </div>
                     <div className="form-group">
                         <label>Room</label>
-                        <select defaultValue={'Choose'}  className="form-control">
+                        <select defaultValue={'Choose'}  onChange={this.changeRoom} className="form-control">
                             <option value="Choose">Choose room</option>
                             {this.GetRoomName()}
                         </select>
+                    </div>
+                    <label>Edit Room</label>
+                    <div className="input-group" >
+                        <input value={this.state.valueRoom} onChange={this.roomInputChange.bind(this)} style={{borderColor:this.state.roomColor}} type="text" className="form-control"/>
+                        <span className="input-group-btn">
+                                <button className="btn btn-primary" type="button" onClick={this.SaveRoomName} >Save</button>
+                            </span>
                     </div>
 
                 </form>
