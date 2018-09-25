@@ -21,13 +21,13 @@ body {
 }
 .forms1 form { padding: 30px; }
 
-@media (min-height: 768px) {
-  body  {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
+/*@media (min-height: 768px) {*/
+  /*body  {*/
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+  /*}*/
+/*}*/
 .form-check-input  + label{
   padding: 10px;
 

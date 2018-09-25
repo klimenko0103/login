@@ -43,6 +43,7 @@ export default class Login extends Component {
         // console.log(user);
             if (!!user) {
                 this.props && this.props.onChange(user)
+                localStorage.setItem('online',JSON.stringify(user) || '');
             }
     }
 
