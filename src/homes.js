@@ -467,14 +467,18 @@ export default class Homes extends Component {
     }
 
     validateHome(value){
-        if (value === ''){
-          return (!value);
+        if (value.trim().length > 0){
+            return true;
         }
+        return false;
     }
+
+
     validateRoom(valueRoom){
-        if (valueRoom === ''){
-            return (!valueRoom);
+        if (valueRoom.trim().length > 0){
+            return true;
         }
+        return false;
     }
 
     GetHomeName(){
@@ -538,6 +542,9 @@ export default class Homes extends Component {
         var rooms= homeObject.rooms;
         // console.log(rooms);
         this.setState({rooms:rooms})
+        this.setState({valueRoom : ''});
+        // console.log( this.state.valueRoom);
+
 
 
         // console.log(home.roomName);
@@ -545,7 +552,7 @@ export default class Homes extends Component {
     }
 
     SaveHomeName(){
-        var homeColor = (this.validateHome(this.state.value))?"red":"green" ;
+        var homeColor = (this.validateHome(this.state.value))?"green":"red" ;
         this.setState({homeColor:homeColor});
         // console.log(homeColor);
         // console.log(this.state.value);
@@ -565,19 +572,19 @@ export default class Homes extends Component {
 
     changeRoom(e) {
         let selector = e.target;
-       console.log(selector)
+       // console.log(selector)
         if(!selector){
             return console.warn('Selector was not found');
         }
         let selectedIndex = e.target.selectedIndex;
-        console.log(selectedIndex)
+        // console.log(selectedIndex)
         if(!selectedIndex){
             return console.warn('Selected index was not found');
         }
         let selectedOption = selector.children[selectedIndex];
-        console.log(selectedOption)
+        // console.log(selectedOption)
         let roomId = selectedOption.getAttribute('data-idr');
-        console.log(roomId )
+        // console.log(roomId )
 
         // console.log([e.target], e.target.children[e.target.selectedIndex].getAttribute('data-id'));
         // console.log(homeId);
@@ -588,7 +595,7 @@ export default class Homes extends Component {
 
 
     SaveRoomName(){
-        var roomColor = (this.validateRoom(this.state.valueRoom))?"red":"green" ;
+        var roomColor = (this.validateRoom(this.state.valueRoom))?"green":"red" ;
         this.setState({roomColor:roomColor});
         // console.log(homeColor);
         // console.log(this.state.value);

@@ -6,11 +6,11 @@ export default class SignUp extends Component {
 
     constructor(props) {
         super(props);
-        var email = props.email;
+        var email = props.email ||'';
         var EmailIsValid = this.validateEmail(email);
-        var login = props.login;
+        var login = props.login || '';
         var LoginIsValid = this.validateLogin(login);
-        var password = props.password;
+        var password = props.password ||'';
         var PasswordIsValid = this.validatePassword(password);
         this.state = {
             name:'',
@@ -30,13 +30,23 @@ export default class SignUp extends Component {
     }
 
     validateEmail(email){
-        return (!email);
+        if (email.trim().length > 0) {
+            return true;
+        }
+        return false;
     }
-    validateLogin(login){
-        return (!login);
+    validateLogin(login) {
+        if (login.trim().length > 0) {
+            return true;
+        }
+        return false;
     }
+
     validatePassword(password){
-        return (!password);
+        if (password.trim().length > 0) {
+            return true;
+        }
+        return false;
     }
 
     handleEmailChange(e) {
@@ -72,9 +82,9 @@ export default class SignUp extends Component {
     }
 
     render() {
-        var emailColor = (this.state.emailValid===true)?"red":"green" ;
-        var loginColor = (this.state.loginValid===true)?"red":"green" ;
-        var passwordColor = (this.state.passwordValid===true)?"red":"green" ;
+        var emailColor = (this.state.emailValid===true)?"green":"red" ;
+        var loginColor = (this.state.loginValid===true)?"green":"red" ;
+        var passwordColor = (this.state.passwordValid===true)?"green":"red" ;
 
         return (
             <div className="forms">
