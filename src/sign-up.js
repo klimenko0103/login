@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as md5 from 'js-md5';
+import fetch from 'node-fetch';
 
 
 export default class SignUp extends Component {
@@ -28,6 +29,51 @@ export default class SignUp extends Component {
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
     }
+
+    postUser() {
+        console.log("HAHAHAHA")
+        fetch("http://localhost:8000/user", {
+            method: "POST",
+            body: JSON.stringify({
+                username :this.state.name,
+                age: this.state.age,
+                email :this.state.email,
+                login : this.state.login,
+                password:this.state.password
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            // mode: 'no-cors',
+        })
+            // .then((res) => {
+            //     return res.json();
+            // })
+            .then(
+                function(response) {
+                    if (response.status !== 200) {
+                        console.log('Looks like there was a problem. Status Code: ' +
+                            response.status);
+                        return;
+                    }
+
+                    // Examine the text in the response
+                    response.json().then(function(data) {
+                        console.log(data);
+                    });
+                }
+            )
+            // .then(res => console.log(res))
+            //
+            // .then(function (data) {
+            //     console.log('Request succeeded', data);
+            // })
+
+    }
+
+
+
+
 
     validateEmail(email){
         if (email.trim().length > 0) {
@@ -110,7 +156,7 @@ export default class SignUp extends Component {
                             <label htmlFor="inputPassword"> Password</label>
                             <input type="password" onChange={this.handlePasswordChange} id="inputPassword" className="form-control" placeholder="Password" required style={{borderColor:passwordColor}}/>
                         </div>
-                        <button className="btn btn-lg btn-primary btn-block" onClick={this.signup.bind(this)} type="button" disabled={!this.state.email| !this.state.login | !this.state.password}> Sign Up </button>
+                        <button className="btn btn-lg btn-primary btn-block" onClick={this.postUser.bind(this)} type="button" disabled={!this.state.email| !this.state.login | !this.state.password}> Sign Up </button>
                     </form>
                 </div>
             </div>
