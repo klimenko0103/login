@@ -30,26 +30,26 @@ export default class Main extends Component
     }
 
     changeUser(user) {
-        // console.log(user);
+        console.log(user);
         this.setState({isOnline: user});
     }
 
     outUser(user){
-        localStorage.setItem('online',JSON.stringify(!user));
+        localStorage.setItem('token',JSON.stringify(!user));
         this.setState({isOnline:!user});
         // console.log(this.state.isOnline);
         this.setState({extraClass1:'active',extraClass2:'',extraClass3:'active',extraClass4:''})
     }
 
     componentDidMount(){
-        var storageUser = localStorage.getItem('online');
+        var storageUser = localStorage.getItem('token');
         // console.log('sjcksd',storageUser);
-        if (storageUser) {
+        if (!storageUser) {
             try {
-                this.setState({isOnline: JSON.parse(storageUser)});
+                this.setState({isOnline: storageUser});
             } catch (e) {
                 console.warn('Can not parse user', e)
-                localStorage.removeItem('online');
+                localStorage.removeItem('token');
             }
         }
     }

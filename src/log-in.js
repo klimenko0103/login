@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import * as md5 from "js-md5";
+// import * as md5 from "js-md5";
+import fetch from "node-fetch";
 
 export default class Login extends Component {
 
@@ -18,6 +19,77 @@ export default class Login extends Component {
         this.handleLoginChange = this.handleLoginChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
     }
+
+    tokenUser(user) {
+        console.log("lalala")
+        fetch("http://localhost:8000/login", {
+            method: "POST",
+            body: JSON.stringify({
+                login : this.state.login,
+                password:this.state.password
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            // mode: 'no-cors',
+        })
+
+            .then(response => {
+                if (response.status !== 200) {
+                    console.log('likeeeeeee ', response);
+                }else{
+                    return response.text()
+                }
+            })
+
+            .then(responseText => {
+
+if(!responseText) return;
+                console.log(responseText)
+                localStorage.setItem('token',responseText);
+
+                user = localStorage.getItem('token')
+                // console.log(user);
+                if (!!user) {
+                    this.props && this.props.onChange(user)
+                    localStorage.setItem('token', user || '');
+                    console.log('user', user);
+                }
+            })
+            .catch(err => console.error(err))
+
+
+
+    }
+
+        // .then((res) => {
+        //     return localStorage.setItem('token',JSON.stringify(res));
+        // // })
+        //     .then(
+        //         function(response) {
+        //             if (response.status !== 200) {
+        //                 console.log('Looks likeeeeeee there was a problem',
+        //                     JSON.stringify(response));
+        //                 return;
+        //             }
+        //
+        //             // Examine the text in the response
+        //             response.json().then(function(data) {
+        //                 console.log(data);
+        //             });
+        //         }
+        //     )
+        // // .then(res => console.log(res))
+        //
+        // .then(function (data) {
+        //     console.log('Request succeeded', data);
+        // })
+
+
+
+
+
+
 
     validateLogin(login) {
         // console.log(!login)
@@ -49,8 +121,9 @@ export default class Login extends Component {
     }
 
     login(user) {
-        user = this.state.login === localStorage.getItem('loclogin') && md5(this.state.password) === localStorage.getItem('locpassword');
-        // console.log(user);
+        // user = this.state.login === localStorage.getItem('loclogin') && md5(this.state.password) === localStorage.getItem('locpassword');
+        user = localStorage.getItem('token')
+        console.log(user);
         if (!!user) {
             this.props && this.props.onChange(user)
             localStorage.setItem('online', JSON.stringify(user) || '');
@@ -81,7 +154,7 @@ export default class Login extends Component {
                                    className="form-control " placeholder="Password" required
                                    style={{borderColor: passwordColor}}/>
                         </div>
-                        <button className="btn btn-lg btn-primary btn-block" onClick={this.login.bind(this)}
+                        <button className="btn btn-lg btn-primary btn-block" onClick={this.tokenUser.bind(this)}
                                 type="button" disabled={!this.state.login | !this.state.password}> Log In
                         </button>
                     </form>

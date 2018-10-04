@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as md5 from "js-md5";
+import fetch from "node-fetch";
 
 export default class Edit extends Component {
 
@@ -95,6 +96,24 @@ export default class Edit extends Component {
     }
 
     componentDidMount(){
+        // console.log("olollololo")
+        fetch("http://localhost:8000/user", {
+            method: "GET",
+            headers: {
+                'x-auth': localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            },
+            // mode: 'no-cors',
+        })
+            .then(response => response.text())
+            .then(responseText => {
+                console.log(responseText)
+            })
+
+            .catch(err => console.error(err));
+
+
+
         var radios = document.getElementsByName("inlineRadioOptions");
         // console.log(radios)
         var valloc = localStorage.getItem('locgender');
@@ -105,6 +124,15 @@ export default class Edit extends Component {
                  // console.log(radios[i])
             }
         }
+
+
+
+                // .then(response => response.text())
+                // .then(responseText => {
+                //     console.log(responseText)
+                //     localStorage.setItem('token',responseText);
+                // })
+                // .catch(err => console.error(err));
 
     }
 
